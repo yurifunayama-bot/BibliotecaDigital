@@ -36,7 +36,7 @@ int main() {
     Biblioteca biblioteca;
     
     std::cout << "[SISTEMA] Inicializando base de dados...\n";
-    std::cout << "[SISTEMA] Tentando carregar o arquivo 'books.csv' (Minimo 100.000 livros)...\n";
+    std::cout << "[SISTEMA] Tentando carregar o arquivo 'books.csv' (Minimo 10.000 livros)...\n";
     
     // R4: Chamada do leitor de arquivos CSV customizado
    std::vector<Livro*> livrosCarregados = CSVReader::carregarLivros("books.csv");
