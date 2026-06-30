@@ -20,8 +20,7 @@ public:
     Benchmark(const Benchmark&) = delete;
     Benchmark& operator=(const Benchmark&) = delete;
 
-    // As 5 Comparações Obrigatórias determinadas pelos requisitos técnicos
-    void executarBenchmarkIsbn(const std::vector<std::string>& isbnsValidos, const std::vector<std::string>& isbnsInvalidos);
+    // Comparações experimentais metodologicamente compatíveis
     void executarBenchmarkTextual(const std::vector<std::string>& titulosAlvo);
     void executarBenchmarkTrie(const std::vector<std::string>& prefixosAlvo);
     void executarBenchmarkExistencia(const std::vector<std::string>& isbnsTeste);
