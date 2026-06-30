@@ -187,7 +187,7 @@ int main() {
             }
             case 8: { // Executar Subsistema de Benchmark
                 Benchmark benchmark(biblioteca);
-                std::cout << "[BENCHMARK] Recolhendo amostras e testando as 5 estruturas estruturais...\n";
+                std::cout << "[BENCHMARK] Recolhendo amostras e executando benchmarks validos...\n";
                 benchmark.executarTodosOsBenchmarks(biblioteca.getAmostraLivros());
                 break;
             }
