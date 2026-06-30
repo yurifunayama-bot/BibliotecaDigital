@@ -1,0 +1,3 @@
+Estrutura,TempoTotal_ns,MemoriaEstimada,VantagemArquitetural
+Trie Padrão,467521200.000000,355904 KB,Baixa Localidade
+Trie Comprimida,1419400.000000,59317 KB,Alta Localidade (Cache)

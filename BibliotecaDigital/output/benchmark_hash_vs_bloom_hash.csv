@@ -1,0 +1,3 @@
+Abordagem,TempoTotal_us,ObservacaoDeEngenharia
+Hash Table Pura,96.200000,Suscetível a buscas em chaves inexistentes
+Bloom Filter + Hash,103.900000,Descarta chaves falsas em O(1) sem colisão

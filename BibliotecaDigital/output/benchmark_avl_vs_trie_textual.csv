@@ -1,0 +1,3 @@
+Estrutura,TempoTotal_us,ComplexidadeTeorica
+Árvore AVL,472.300000,O(log N)
+Árvore Trie Padrão,4904.600000,O(K)

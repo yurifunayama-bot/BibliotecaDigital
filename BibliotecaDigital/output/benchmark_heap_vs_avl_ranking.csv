@@ -1,0 +1,3 @@
+Estrutura,TempoAcessoTop1_ns,ComplexidadeExtracao
+Max-Heap Binário,300.000000,O(1) para leitura / O(log N) extração
+Árvore AVL,784600.000000,O(N) ou O(log N) dependendo da indexação secundária
