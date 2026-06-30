@@ -19,47 +19,9 @@ void Benchmark::salvarParaCSV(const std::string& nomeFicheiro, const std::string
     std::cout << "[BENCHMARK] Relatório exportado com sucesso: " << nomeFicheiro << "\n";
 }
 
-void Benchmark::executarBenchmarkIsbn(const std::vector<std::string>& isbnsValidos, const std::vector<std::string>& isbnsInvalidos) {
-    // Comparação 1: Tabela Hash X Árvore AVL para busca por ISBN
-    std::cout << "[BENCHMARK] Iniciando Comparação 1: Tabela Hash VS Árvore AVL (Busca ISBN)...\n";
-    std::vector<std::string> dadosCSV;
-
-    // Amalgama chaves válidas e inválidas para balancear o teste de busca
-    std::vector<std::string> todasChaves = isbnsValidos;
-    todasChaves.insert(todasChaves.end(), isbnsInvalidos.begin(), isbnsInvalidos.end());
-
-    // 1. Teste na Hash Table
-    auto inicioHash = std::chrono::high_resolution_clock::now();
-    size_t operacoesHash = 0;
-    for (const auto& isbn : todasChaves) {
-        biblioteca.buscarPorIsbnSemRegistrar(isbn); // Internamente utiliza a Tabela Hash
-        operacoesHash++;
-    }
-    auto fimHash = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double, std::nano> tempoHash = fimHash - inicioHash;
-
-    // 2. Teste na Árvore AVL (Como a nossa AVL foi projetada para ordenar por título,
-    // simulamos aqui uma busca exata equivalente ou invocamos a busca de integridade por ISBN)
-    auto inicioAvl = std::chrono::high_resolution_clock::now();
-    size_t operacoesAvl = 0;
-    for (const auto& isbn : todasChaves) {
-        // Simulador de percurso AVL para busca de ID/ISBN equivalente
-        // (Visto que a AVL padrão do requisito usa string de título, fazemos busca exata textual comparativa)
-        biblioteca.buscarPorTituloSemRegistrar(isbn); 
-        operacoesAvl++;
-    }
-    auto fimAvl = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double, std::nano> tempoAvl = fimAvl - inicioAvl;
-
-    // Formata linhas para o relatório CSV
-    dadosCSV.push_back("Tabela Hash," + std::to_string(tempoHash.count() / operacoesHash) + "," + std::to_string(operacoesHash) + ",O(1) Amortizado");
-    dadosCSV.push_back("Árvore AVL," + std::to_string(tempoAvl.count() / operacoesAvl) + "," + std::to_string(operacoesAvl) + ",O(log N)");
-
-    salvarParaCSV("benchmark_hash_vs_avl_isbn.csv", "Estrutura,LatenciaMedia_ns,NumeroOperacoes,ComplexidadeTeorica", dadosCSV);
-}
 
 void Benchmark::executarBenchmarkTextual(const std::vector<std::string>& titulosAlvo) {
-    // Comparação 2: Árvore AVL X Árvore Trie para busca textual exata
+    // Comparação 1: Árvore AVL X Árvore Trie para busca textual exata
     std::cout << "[BENCHMARK] Iniciando Comparação 2: Árvore AVL VS Árvore Trie (Busca Textual)...\n";
     std::vector<std::string> dadosCSV;
 
@@ -86,7 +48,7 @@ void Benchmark::executarBenchmarkTextual(const std::vector<std::string>& titulos
 }
 
 void Benchmark::executarBenchmarkTrie(const std::vector<std::string>& prefixosAlvo) {
-    // Comparação 3: Trie Padrão X Trie Comprimida (Radix Tree) para memória e desempenho
+    // Comparação 2: Trie Padrão X Trie Comprimida (Radix Tree) para memória e desempenho
     std::cout << "[BENCHMARK] Iniciando Comparação 3: Trie VS Trie Comprimida (Performance e Espaço)...\n";
     std::vector<std::string> dadosCSV;
 
@@ -119,7 +81,7 @@ void Benchmark::executarBenchmarkTrie(const std::vector<std::string>& prefixosAl
 }
 
 void Benchmark::executarBenchmarkExistencia(const std::vector<std::string>& isbnsTeste) {
-    // Comparação 4: Hash Table Pura X Bloom Filter + Hash Table para verificação de existência
+    // Comparação 3: Hash Table Pura X Bloom Filter + Hash Table para verificação de existência
     std::cout << "[BENCHMARK] Iniciando Comparação 4: Hash Pura VS Bloom + Hash (Filtro de Portaria)...\n";
     std::vector<std::string> dadosCSV;
 
@@ -146,7 +108,7 @@ void Benchmark::executarBenchmarkExistencia(const std::vector<std::string>& isbn
 }
 
 void Benchmark::executarBenchmarkRanking() {
-    // Comparação 5: Max-Heap Binário X Árvore AVL para extração e processamento de rankings
+    // Comparação 4: Max-Heap Binário X Árvore AVL para extração e processamento de rankings
     std::cout << "[BENCHMARK] Iniciando Comparação 5: Max-Heap VS Árvore AVL (Geração de Rankings)...\n";
     std::vector<std::string> dadosCSV;
 
@@ -179,14 +141,12 @@ void Benchmark::executarTodosOsBenchmarks(const std::vector<Livro*>& amostraLivr
         titulosValidos.push_back(amostraLivros[i]->getTitulo());
     }
 
-    std::vector<std::string> isbnsInvalidos = {"0000000000000", "9999999999999", "1234567890123"};
     std::vector<std::string> prefixosTeste = {"O", "A", "Guia", "Alg"};
 
     std::cout << "\n==================================================\n";
     std::cout << "  INICIANDO SUBSISTEMA EXPERIMENTAL DE BENCHMARKS \n";
     std::cout << "==================================================\n";
 
-    executarBenchmarkIsbn(isbnsValidos, isbnsInvalidos);
     executarBenchmarkTextual(titulosValidos);
     executarBenchmarkTrie(prefixosTeste);
     executarBenchmarkExistencia(isbnsValidos);
